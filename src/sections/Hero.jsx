@@ -83,9 +83,9 @@ export default function Hero() {
             Applied AI Automations that ship revenue in 90 days.
           </h1>
           <p className="hero-desc max-w-xl text-lg md:text-xl text-white/70 leading-relaxed">
-            We help non‑technical B2B operators imagine, design & deploy
+            We help non-technical B2B operators imagine, design & deploy
             internal AI products that remove manual work, unlock new margins &
-            de‑risk adoption.
+            de-risk adoption, working with 3–5 companies at a time.
           </p>
           <div className="flex flex-wrap gap-4 hero-cta">
             <a
@@ -123,7 +123,7 @@ export default function Hero() {
                 0
               </div>
               <div className="mt-1 text-white/50 tracking-wide uppercase text-[11px]">
-                Deployed use‑cases
+                Deployed use-cases
               </div>
             </div>
             <div>

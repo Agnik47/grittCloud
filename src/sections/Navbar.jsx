@@ -1,8 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
 export default function Navbar() {
   const navRef = useRef(null);
+  const [showModal, setShowModal] = useState(false);
   let lastScrollY = 0;
 
   useEffect(() => {
@@ -44,36 +45,158 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Modal animation
+  useEffect(() => {
+    if (showModal) {
+      gsap.fromTo(
+        "#contact-modal",
+        { y: 60, opacity: 0, scale: 0.98 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }
+      );
+    }
+  }, [showModal]);
+
   return (
-    <nav
-      ref={navRef}
-      className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-ink/80 via-ink/60 to-transparent backdrop-blur-md shadow-none transition-all duration-300"
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
-        <div className="hero-nav-item text-lg font-semibold tracking-tight">
-          Studio Automata
+    <>
+      <nav
+        ref={navRef}
+        className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-ink/80 via-ink/60 to-transparent backdrop-blur-md shadow-none transition-all duration-300"
+      >
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
+          <a href="/" className="hero-nav-item flex items-center">
+            <img
+              src="https://gritt.cloud/logo.svg"
+              alt="Gritt Cloud Logo"
+              className="h-8 w-auto"
+              style={{ minWidth: 32 }}
+            />
+          </a>
+          <div className="hidden md:flex gap-8 text-sm text-white/70">
+            <a href="#solutions" className="hero-nav-item hover:text-white">
+              Solutions
+            </a>
+            <a href="#process" className="hero-nav-item hover:text-white">
+              Process
+            </a>
+            <a href="#credibility" className="hero-nav-item hover:text-white">
+              Proof
+            </a>
+            <a href="#contact" className="hero-nav-item hover:text-white">
+              Contact
+            </a>
+          </div>
+          <button
+            onClick={() => setShowModal(true)}
+            className="hero-nav-item text-sm px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10"
+          >
+            Get in Touch
+          </button>
         </div>
-        <div className="hidden md:flex gap-8 text-sm text-white/70">
-          <a href="#solutions" className="hero-nav-item hover:text-white">
-            Solutions
-          </a>
-          <a href="#process" className="hero-nav-item hover:text-white">
-            Process
-          </a>
-          <a href="#credibility" className="hero-nav-item hover:text-white">
-            Proof
-          </a>
-          <a href="#contact" className="hero-nav-item hover:text-white">
-            Contact
-          </a>
-        </div>
-        <a
-          href="#contact"
-          className="hero-nav-item text-sm px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur border border-white/10"
+      </nav>
+
+      {/* Modal */}
+      {showModal && (
+        <div
+          className="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          onClick={() => setShowModal(false)}
         >
-          Get in Touch
-        </a>
-      </div>
-    </nav>
+          <div
+            id="contact-modal"
+            className="relative bg-ink rounded-2xl shadow-2xl border border-white/10 p-8 w-[90vw] max-w-md"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-3 right-4 text-white/50 hover:text-white text-xl"
+              onClick={() => setShowModal(false)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <h3 className="text-xl font-semibold mb-6 text-white">
+              Get in Touch
+            </h3>
+            <form
+              className="space-y-5"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setShowModal(false);
+                // You can add your submit logic here
+              }}
+            >
+              <div>
+                <label
+                  className="block text-white/70 text-sm mb-1"
+                  htmlFor="org"
+                >
+                  Organization Name
+                </label>
+                <input
+                  id="org"
+                  name="org"
+                  type="text"
+                  required
+                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                  placeholder="Your organization"
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-white/70 text-sm mb-1"
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                  placeholder="you@email.com"
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-white/70 text-sm mb-1"
+                  htmlFor="person"
+                >
+                  Person Name
+                </label>
+                <input
+                  id="person"
+                  name="person"
+                  type="text"
+                  required
+                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                  placeholder="Contact person"
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-white/70 text-sm mb-1"
+                  htmlFor="contact"
+                >
+                  Person Contact Number
+                </label>
+                <input
+                  id="contact"
+                  name="contact"
+                  type="tel"
+                  required
+                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                  placeholder="Contact number"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full mt-2 py-3 rounded-full bg-accent hover:bg-accent2 text-white font-medium text-sm tracking-wide shadow-subtle transition"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -1,10 +1,10 @@
 
 export default function Credibility(){
   const items = [
-    ['Global SaaS Platform', 'Reduced onboarding case prep from 46 min to 6 min using retrieval + summarization agents.'],
-    ['Industrial Supplier', 'Automated quote validation freeing 2.5 FTE and accelerating cycle time 34%.'],
-    ['Healthcare Network', 'Deployed intake triage assistant reducing manual data structuring 71%.'],
-    ['FinTech Vendor', 'Evaluation harness cut hallucination rate 52% across high-impact flows.']
+    ['HR Tech', 'Automated onboarding assistant cut processing time by 65% and boosted employee satisfaction scores by 22%.'],
+    ['Legal Advisory Firms', 'Contract review assistant reduced due diligence prep time from 7 hours to 40 minutes.'],
+    ['Marketing Platforms', 'Campaign reporting agent automated data pulls across platforms, saving 25+ hours/month per account manager.'],
+    ['FinTech Vendor', 'AI finance agent streamlined invoice management, cutting errors by 54% and reducing closure time by 40%']
   ];
   return (
     <section id="credibility" className="section-anchor relative py-28 md:py-40 bg-ink/95">
