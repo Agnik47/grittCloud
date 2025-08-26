@@ -1,4 +1,7 @@
 export default function Footer() {
+  // Replace with your Freshdesk portal URL
+  const freshdeskUrl = "https://YOURDOMAIN.freshdesk.com/support/tickets/new";
+
   return (
     <footer className="relative py-14 border-t border-white/10 bg-ink/95 text-sm">
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-10 md:items-center justify-between">
@@ -22,7 +25,12 @@ export default function Footer() {
           <a href="#contact" className="hover:text-white">
             Contact
           </a>
-          <a href="#support" className="hover:text-green-400">
+          <a
+            href={freshdeskUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-green-400"
+          >
             Support
           </a>
         </div>

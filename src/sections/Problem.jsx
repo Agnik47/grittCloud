@@ -65,7 +65,7 @@ export default function Problem() {
               className={`${item.bgColor} rounded-2xl p-8 hover:opacity-90 transition-all flex flex-col justify-between overflow-hidden ${
                 item.size === "large" ? "md:row-span-2" : ""
               }`}
-            >
+            > 
               <div>
                 <h3 className="text-2xl font-bold text-white mb-3">
                   {item.title}
