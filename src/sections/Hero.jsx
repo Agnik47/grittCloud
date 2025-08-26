@@ -76,11 +76,11 @@ export default function Hero() {
   }, []);
 
   return (
-    <header className="relative overflow-hidden gradient-edge noise-overlay pt-32 pb-28 md:pb-40">
+    <header className="relative overflow-hidden gradient-edge noise-overlay pt-12 pb-28 md:pb-40">
       <div className="max-w-5xl mx-auto px-6 relative">
         <div className="mt-28 md:mt-40 space-y-10">
           <h1 className="hero-title font-display text-5xl md:text-7xl font-medium tracking-tight leading-[1.05] bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
-            Applied AI Automations that ship revenue in 90 days.
+           AI Automations with one time setup and. Lifetime Impact
           </h1>
           <p className="hero-desc max-w-xl text-lg md:text-xl text-white/70 leading-relaxed">
             We help non-technical B2B operators imagine, design & deploy

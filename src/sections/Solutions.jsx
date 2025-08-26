@@ -22,7 +22,7 @@ export default function Solutions() {
   return (
     <section
       id="solutions"
-      className="section-anchor relative py-28 md:py-40 bg-ink/95"
+    className="section-anchor relative py-28 md:py-40 bg-ink/95"
     >
       <div className="max-w-6xl mx-auto px-6">
         <div className="mb-16 max-w-3xl">
@@ -32,7 +32,7 @@ export default function Solutions() {
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {offers.map((o) => (
-            <div
+          <div
               key={o.title}
               className="relative rounded-2xl p-8 bg-gradient-to-b from-white/5 to-white/0 border border-white/10 hover:border-accent/50 transition-colors"
             >
