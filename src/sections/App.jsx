@@ -12,6 +12,7 @@ import Footer from "./Footer";
 
 export default function App() {
   const scrollRef = useRef(null);
+  const scrollInstance = useRef(null);
 
   useEffect(() => {
     const scroll = new LocomotiveScroll({
@@ -21,6 +22,8 @@ export default function App() {
       multiplier: 1,
       class: "is-reveal",
     });
+
+    scrollInstance.current = scroll;
 
     const handleResize = () => scroll.update();
     window.addEventListener("resize", handleResize);
@@ -33,7 +36,7 @@ export default function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar scrollInstance={scrollInstance} />
       <div ref={scrollRef} data-scroll-container>
         <Hero />
         <Problem />

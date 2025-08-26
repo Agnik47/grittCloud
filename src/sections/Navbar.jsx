@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
-export default function Navbar() {
+export default function Navbar({ scrollInstance }) {
   const navRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   let lastScrollY = 0;
 
   useEffect(() => {
-    // Stagger in nav items on mount
+    // Animate nav items on mount
     gsap.fromTo(
       ".hero-nav-item",
       { y: -30, opacity: 0 },
@@ -21,29 +21,39 @@ export default function Navbar() {
       }
     );
 
-    // Scroll show/hide logic
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY < 10) {
-        gsap.to(navRef.current, { y: 0, duration: 0.3, ease: "power2.out" });
-      } else if (currentScrollY > lastScrollY) {
-        // Scrolling down
-        gsap.to(navRef.current, {
-          y: "-100%",
-          duration: 0.4,
-          ease: "power2.in",
-        });
-      } else {
-        // Scrolling up
-        gsap.to(navRef.current, { y: 0, duration: 0.4, ease: "power2.out" });
-      }
-      lastScrollY = currentScrollY;
-    };
+    // Scroll show/hide logic using Locomotive Scroll
+    const scroll = scrollInstance?.current;
+    if (scroll) {
+      scroll.on("scroll", (args) => {
+        const currentScrollY = args.scroll.y;
+        if (currentScrollY < 10) {
+          gsap.to(navRef.current, { y: 0, duration: 0.3, ease: "power2.out" });
+        } else if (currentScrollY > lastScrollY) {
+          // Scrolling down
+          gsap.to(navRef.current, {
+            y: "-100%",
+            duration: 0.4,
+            ease: "power2.in",
+          });
+        } else {
+          // Scrolling up
+          gsap.to(navRef.current, { y: 0, duration: 0.4, ease: "power2.out" });
+        }
+        lastScrollY = currentScrollY;
+      });
+    }
+  }, [scrollInstance]);
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Ensure navbar shows when clicking any nav link
+  const handleNavClick = (e, target) => {
+    e.preventDefault();
+    const scroll = scrollInstance?.current;
+    if (scroll) {
+      scroll.scrollTo(target);
+    }
+    // Always show navbar after click
+    gsap.to(navRef.current, { y: 0, duration: 0.3, ease: "power2.out" });
+  };
 
   // Modal animation
   useEffect(() => {
@@ -72,16 +82,32 @@ export default function Navbar() {
             />
           </a>
           <div className="hidden md:flex gap-8 text-sm text-white/70">
-            <a href="#solutions" className="hero-nav-item hover:text-white">
+            <a
+              href="#solutions"
+              className="hero-nav-item hover:text-white"
+              onClick={(e) => handleNavClick(e, "#solutions")}
+            >
               Solutions
             </a>
-            <a href="#process" className="hero-nav-item hover:text-white">
+            <a
+              href="#process"
+              className="hero-nav-item hover:text-white"
+              onClick={(e) => handleNavClick(e, "#process")}
+            >
               Process
             </a>
-            <a href="#credibility" className="hero-nav-item hover:text-white">
+            <a
+              href="#credibility"
+              className="hero-nav-item hover:text-white"
+              onClick={(e) => handleNavClick(e, "#credibility")}
+            >
               Proof
             </a>
-            <a href="#contact" className="hero-nav-item hover:text-white">
+            <a
+              href="#contact"
+              className="hero-nav-item hover:text-white"
+              onClick={(e) => handleNavClick(e, "#contact")}
+            >
               Contact
             </a>
           </div>
