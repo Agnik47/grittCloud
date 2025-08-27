@@ -1,147 +1,146 @@
-import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiFlag, FiMap, FiCode, FiPlayCircle, FiTrendingUp } from 'react-icons/fi';
+
+const iconMap = {
+  Frame: FiFlag,
+  Design: FiMap,
+  Build: FiCode,
+  Deploy: FiPlayCircle,
+  Amplify: FiTrendingUp
+};
 
 export default function Process() {
+  const [active, setActive] = useState(0);
   const steps = [
-    ['Frame', 'Clarify business constraint, value levers & success metrics. Codify current workflow.'],
-    ['Design', 'Map system architecture, model fit, data surfaces, human-in-loop points.'],
-    ['Build', 'Implement minimal viable automation + evaluation harness.'],
-    ['Deploy', 'Rollout to a controlled cohort with monitoring & guardrails.'],
-    ['Amplify', 'Instrument ROI, expand scope, enable adjacent teams.']
+    {
+      title: 'Frame',
+      desc: 'Clarify constraint, value levers & success metrics. Codify current workflow + baseline.',
+      notes: ['Business anchor defined', 'Workflow mapped', 'Metric instrumentation plan']
+    },
+    {
+      title: 'Design',
+      desc: 'Map architecture, model fit, data surfaces, human-in-loop + failure states.',
+      notes: ['System diagram', 'Data contracts', 'Guardrail design']
+    },
+    {
+      title: 'Build',
+      desc: 'Implement minimal viable automation + eval harness. Ship functional spine.',
+      notes: ['MVP workflow', 'Eval harness', 'Ops runbook draft']
+    },
+    {
+      title: 'Deploy',
+      desc: 'Controlled rollout to first cohort. Monitor latency, drift, adoption & errors.',
+      notes: ['Cohort onboarded', 'Observability live', 'Risk & fallback paths']
+    },
+    {
+      title: 'Amplify',
+      desc: 'Quantify ROI, expand scope, enable adjacent teams + compound capability layer.',
+      notes: ['ROI report', 'Adjacent backlog', 'Enablement assets']
+    }
   ];
 
-  const [hoveredWire, setHoveredWire] = useState(null);
-
-  // Function to generate random wire paths
-  const generateWirePath = (index, isEven) => {
-    const startX = isEven ? 100 : 0;
-    const endX = isEven ? 0 : 100;
-    
-    // Generate some random control points for organic-looking curves
-    const cp1x = 50 + (Math.random() * 20 - 10);
-    const cp1y = 25 + (Math.random() * 20 - 10);
-    const cp2x = 50 + (Math.random() * 20 - 10);
-    const cp2y = 75 + (Math.random() * 20 - 10);
-    
-    return `M ${startX} 0 C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} 100`;
-  };
-
   return (
-    <section id="process" className="relative py-28 md:py-40 bg-gray-900 overflow-hidden">
+    <section id="process" className="relative py-32 md:py-44 section-blend overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.35] pointer-events-none" style={{background:"radial-gradient(circle at 25% 35%, rgba(99,102,241,0.15), transparent 60%), radial-gradient(circle at 80% 70%, rgba(236,72,153,0.12), transparent 65%)"}} />
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className="mb-16 max-w-3xl">
-          <h2 className="font-display text-3xl md:text-5xl font-bold text-white mb-4">
-            A disciplined loop. <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Not a science experiment.</span>
+        <div className="mb-20 max-w-4xl">
+          <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight mb-6">
+            A disciplined loop. <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">Not a science experiment.</span>
           </h2>
-          <p className="text-gray-400 text-lg">
-            Our proven process ensures your AI initiatives deliver real business value, not just technical experiments.
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-3xl">
+            Rendered like an n8n workflow: each stage is a promotable artifact with clear exit criteria and telemetry. Click a node to inspect its deliverables.
           </p>
         </div>
-        
-        {/* Process timeline container with dotted background */}
-        <div className="relative bg-gray-800 rounded-3xl p-8 md:p-12 border border-gray-700 shadow-2xl"
-          style={{
-            backgroundImage: 'radial-gradient(circle, #4a5568 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-            backgroundPosition: 'center',
-          }}>
-          
-          <div className="relative">
-            <ol className="space-y-24 md:space-y-32 relative z-10">
-              {steps.map((s, i) => {
-                const isEven = i % 2 === 0;
-                
-                return (
-                  <li key={s[0]} className={`relative ${isEven ? 'md:pr-1/2' : 'md:pl-1/2'} group`}>
-                    {/* Connection dots */}
-                    <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 border-4 border-gray-800 z-20 hidden md:flex items-center justify-center">
-                      <span className="text-xs font-bold text-white">{i+1}</span>
+
+        {/* Horizontal workflow */}
+        <div className="relative overflow-x-auto pb-10 -mx-4 px-4">
+          <div className="min-w-[900px] flex items-start gap-10">
+            {steps.map((step, i) => {
+              const Icon = iconMap[step.title];
+              const isActive = i === active;
+              return (
+                <div key={step.title} className="flex flex-col items-stretch w-56">
+                  <button
+                    onClick={() => setActive(i)}
+                    className={`workflow-node group rounded-2xl text-left p-5 transition-all duration-300 ${isActive ? 'workflow-node-active' : 'hover:shadow-lg'} focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500`}
+                  >
+                    <div className="flex items-center mb-4">
+                      <div className={`w-11 h-11 flex items-center justify-center rounded-xl mr-3 shrink-0 bg-gradient-to-br from-indigo-500/90 to-purple-500/90 shadow-md group-hover:scale-105 transition-transform ${isActive ? 'ring-2 ring-indigo-400 ring-offset-2 ring-offset-[#0B0F19]' : ''}`}> 
+                        <Icon className="text-white" size={22} />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[11px] tracking-wider font-mono text-indigo-300/70">{String(i+1).padStart(2,'0')}</span>
+                        <span className="text-white font-semibold leading-tight">{step.title}</span>
+                      </div>
                     </div>
-                    
-                    {/* Interactive wires */}
-                    {i > 0 && (
-                      <div className="absolute left-1/2 transform -translate-x-1/2 top-0 w-24 h-full -translate-y-1/2 hidden md:block z-0"
-                           style={{ height: '150%' }}>
-                        <svg 
-                          width="100%" 
-                          height="100%" 
-                          viewBox="0 0 100 100" 
-                          preserveAspectRatio="none"
-                          className="overflow-visible"
-                        >
-                          <motion.path
-                            d={generateWirePath(i, isEven)}
-                            strokeWidth="2"
-                            stroke="url(#wireGradient)"
-                            fill="none"
-                            initial={{ pathLength: 0 }}
-                            animate={{ 
-                              pathLength: 1,
-                              transition: { duration: 1.5, delay: i * 0.2 } 
-                            }}
-                            whileHover={{
-                              stroke: "#ec4899",
-                              strokeWidth: 3,
-                              transition: { duration: 0.2 }
-                            }}
-                            drag
-                            dragConstraints={{
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              bottom: 0,
-                            }}
-                            dragElastic={0.1}
-                            className="cursor-grab active:cursor-grabbing"
-                            onHoverStart={() => setHoveredWire(i)}
-                            onHoverEnd={() => setHoveredWire(null)}
-                          />
-                          <defs>
-                            <linearGradient id="wireGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                              <stop offset="0%" stopColor="#3b82f6" />
-                              <stop offset="100%" stopColor="#8b5cf6" />
-                            </linearGradient>
-                          </defs>
-                        </svg>
-                      </div>
-                    )}
-                    
-                    {/* Step card */}
-                    <motion.div 
-                      className={`bg-gray-800 rounded-2xl p-6 md:p-8 border border-gray-700 shadow-xl transform transition-all duration-300 hover:shadow-2xl ${isEven ? 'md:mr-8' : 'md:ml-8'}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
-                      whileHover={{ 
-                        scale: 1.02,
-                        borderColor: hoveredWire === i ? "#ec4899" : "#4a5568",
-                        transition: { duration: 0.2 }
-                      }}
-                    >
-                      <div className="flex items-start">
-                        <div className={`flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg mr-4 shadow-lg`}>
-                          {i+1}
-                        </div>
-                        <div>
-                          <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{s[0]}</h3>
-                          <p className="text-gray-400 text-sm md:text-base leading-relaxed">{s[1]}</p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </li>
-                );
-              })}
-            </ol>
-            
-            {/* Central connection line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 hidden md:block rounded-full"></div>
+                    <p className="text-white/60 text-xs leading-relaxed pr-2">
+                      {step.desc}
+                    </p>
+                  </button>
+                  {i < steps.length -1 && <div className="workflow-connector" />}
+                </div>
+              );
+            })}
           </div>
         </div>
-        
-        <div className="mt-12 text-center text-gray-500 text-sm">
-          <p>✨ Drag and play with the connecting wires to explore our process flow</p>
+
+        {/* Detail panel */}
+        <div className="mt-8 md:mt-14 grid md:grid-cols-5 gap-8">
+          <div className="md:col-span-3 rounded-3xl p-8 bg-gradient-to-b from-white/5 to-white/0 border border-white/10">
+            <div className="text-xs font-mono tracking-widest text-indigo-300/70 mb-3">STAGE DETAIL</div>
+            <h3 className="text-2xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-500/90 shadow">{React.createElement(iconMap[steps[active].title], { size: 18, className: 'text-white'})}</span>
+              {steps[active].title}
+            </h3>
+            <p className="text-white/65 leading-relaxed mb-6 text-sm md:text-base">
+              {steps[active].desc}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {steps[active].notes.map(n => (
+                <span key={n} className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] tracking-wide text-white/70">{n}</span>
+              ))}
+            </div>
+          </div>
+          <div className="md:col-span-2 space-y-6">
+            <MetricCard label="Exit Criteria" items={steps[active].notes} />
+            <AnimatePresence mode="wait">
+              <motion.div key={active} initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-10}} transition={{duration:.35}} className="rounded-3xl p-6 bg-indigo-500/5 border border-indigo-400/20">
+                <div className="text-xs font-mono tracking-widest text-indigo-300/70 mb-2">WHY IT MATTERS</div>
+                <p className="text-white/70 text-sm leading-relaxed">{whyCopy(steps[active].title)}</p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
+        <div className="mt-16 text-center text-white/40 text-xs tracking-wide">Click / tap nodes to explore the workflow. Designed for compounding value – not one-off experiments.</div>
       </div>
     </section>
   );
+}
+
+function MetricCard({ label, items }) {
+  return (
+    <div className="rounded-3xl p-6 bg-gradient-to-b from-white/5 to-white/0 border border-white/10 h-full">
+      <div className="text-xs font-mono tracking-widest text-indigo-300/70 mb-3">{label.toUpperCase()}</div>
+      <ul className="space-y-3">
+        {items.map(i => (
+          <li key={i} className="flex items-start gap-3 text-sm group">
+            <span className="workflow-mini-line h-9 rounded-full group-hover:opacity-100 transition-opacity" />
+            <span className="text-white/70 group-hover:text-white/90 transition-colors leading-relaxed">{i}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function whyCopy(stage) {
+  switch(stage) {
+    case 'Frame': return 'Without a quantified constraint & baseline you can\'t prove impact or prioritize; framing de-risks wander.';
+    case 'Design': return 'Intentional interface & data design prevents brittle scripts and enables safe human oversight early.';
+    case 'Build': return 'A thin vertical slice produces the first observable value & evaluation harness so iteration compounds.';
+    case 'Deploy': return 'Controlled rollout captures real usage signal & uncovers edge cases before reputational risk grows.';
+    case 'Amplify': return 'Measured ROI, enablement & backlog creation converts one-off success into a capability layer.';
+    default: return '';
+  }
 }

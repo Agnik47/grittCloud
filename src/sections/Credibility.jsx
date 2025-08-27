@@ -7,7 +7,7 @@ export default function Credibility(){
     ['FinTech Vendor', 'AI finance agent streamlined invoice management, cutting errors by 54% and reducing closure time by 40%']
   ];
   return (
-    <section id="credibility" className="section-anchor relative py-28 md:py-40 bg-ink/95">
+  <section id="credibility" className="section-anchor relative py-28 md:py-40 bg-ink/95 section-blend">
       <div className="max-w-6xl mx-auto px-6">
         <div className="max-w-3xl mb-16">
           <h2 className="font-display text-3xl md:text-5xl font-medium tracking-tight">Signals we execute.</h2>

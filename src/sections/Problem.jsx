@@ -45,7 +45,7 @@ export default function Problem() {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-[#0F1117] via-[#0D0F14] bg-ink/95 py-16 relative overflow-hidden">
+  <section className="bg-gradient-to-b from-[#0F1117] via-[#0D0F14] bg-ink/95 py-16 relative overflow-hidden section-blend">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Title */}
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">

@@ -1,6 +1,6 @@
 export default function CTA() {
   return (
-    <section id="contact" className="section-anchor relative py-32 bg-ink">
+  <section id="contact" className="section-anchor relative py-32 bg-ink section-blend">
       <div className="max-w-3xl mx-auto px-6 text-center">
         <h2 className="font-display text-4xl md:text-5xl font-medium tracking-tight mb-8">
           Scope your first automation.
