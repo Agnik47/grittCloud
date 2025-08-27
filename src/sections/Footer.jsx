@@ -3,7 +3,7 @@ export default function Footer() {
   const freshdeskUrl = "https://YOURDOMAIN.freshdesk.com/support/tickets/new";
 
   return (
-    <footer className="relative py-14 border-t border-white/10 bg-ink/95 text-sm">
+  <footer className="relative py-14 border-t border-white/10 bg-ink/95 text-sm section-blend">
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-10 md:items-center justify-between">
         <div className="space-y-2">
           <div className="font-medium tracking-tight">Studio Automata</div>
