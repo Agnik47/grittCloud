@@ -41,9 +41,9 @@ export default function Hero() {
     // Counting animation for stats
     const stats = [
       { selector: ".stat-hours", end: 42000, prefix: "", suffix: "+" },
-      { selector: ".stat-value", end: 12, prefix: "$", suffix: "M+" },
+      { selector: ".stat-value", end: 5, prefix: "$", suffix: "M+" },
       { selector: ".stat-cases", end: 38, prefix: "", suffix: "" },
-      { selector: ".stat-roi", end: 90, prefix: "", suffix: " days" },
+      { selector: ".stat-roi", end: 60, prefix: "", suffix: " days" },
     ];
 
     stats.forEach((stat, i) => {
@@ -90,7 +90,7 @@ export default function Hero() {
           <div className="flex flex-wrap gap-4 hero-cta">
             <a
               href="#contact"
-              className="px-7 py-4 rounded-full bg-accent hover:bg-accent2 text-white font-medium text-sm tracking-wide shadow-subtle"
+              className="px-7 py-4 rounded-full bg-gradient-to-r from-[#EDFF08] to-[#0DFF9B] text-black font-medium text-sm tracking-wide shadow-subtle"
             >
               Request Scope Session
             </a>
@@ -107,7 +107,7 @@ export default function Hero() {
                 0
               </div>
               <div className="mt-1 text-white/50 tracking-wide uppercase text-[11px]">
-                Hours automated
+                Hours of Work automated
               </div>
             </div>
             <div>
@@ -115,7 +115,7 @@ export default function Hero() {
                 0
               </div>
               <div className="mt-1 text-white/50 tracking-wide uppercase text-[11px]">
-                Client value created
+                Client value Unlocked
               </div>
             </div>
             <div>

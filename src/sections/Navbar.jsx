@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { assets } from "../assets/assets";
 
 export default function Navbar({ scrollInstance }) {
   const navRef = useRef(null);
@@ -75,7 +76,7 @@ export default function Navbar({ scrollInstance }) {
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
           <a href="/" className="hero-nav-item flex items-center">
             <img
-              src="https://gritt.cloud/logo.svg"
+              src={assets.HeaderLogo}
               alt="Gritt Cloud Logo"
               className="h-8 w-auto"
               style={{ minWidth: 32 }}

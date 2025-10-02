@@ -1,6 +1,7 @@
 import { FaAnchor, FaProjectDiagram, FaUserSecret, FaTools, FaRegChartBar, FaNetworkWired } from "react-icons/fa";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
+import { assets } from "../assets/assets";
 
 export default function Problem() {
   const items = [
@@ -10,9 +11,7 @@ export default function Problem() {
         "Initiatives start from tech curiosity not a quantifiable bottleneck.",
       size: "large",
       icons: [
-        <FaAnchor key="1" size={100} className="text-gray-400 opacity-70 drop-shadow-lg" />,
-        <FaRegChartBar key="2" size={100} className="text-gray-400 opacity-70 drop-shadow-lg" />,
-        <FaNetworkWired key="3" size={100} className="text-gray-400 opacity-70 drop-shadow-lg" />,
+        <img src={assets.P1} alt="P1" className="max-w-full h-auto object-contain" />
       ],
     },
     {
@@ -21,7 +20,7 @@ export default function Problem() {
         "Nobody has codified the current manual workflow or success metric.",
       size: "small",
       icons: [
-        <FaProjectDiagram key="1" size={70} className="text-gray-400 opacity-70 drop-shadow-lg" />,
+        <FaProjectDiagram key="1" size={70} className="text-[#EDFF08] opacity-70 drop-shadow-lg" />,
       ],
     },
     {
@@ -30,7 +29,7 @@ export default function Problem() {
         "Unvetted scripts & agents create risk and die after the champion leaves.",
       size: "large",
       icons: [
-        <FaUserSecret key="1" size={130} className="text-gray-400 opacity-70 drop-shadow-lg" />,
+        <FaUserSecret key="1" size={130} className="text-[#EDFF08] opacity-70 drop-shadow-lg" />,
       ],
     },
     {
@@ -39,7 +38,7 @@ export default function Problem() {
         "Point solutions overlap; no compounding capability layer emerges.",
       size: "small",
       icons: [
-        <FaTools key="1" size={60} className="text-gray-400 opacity-70 drop-shadow-lg" />,
+        <FaTools key="1" size={60} className="text-[#EDFF08] opacity-70 drop-shadow-lg" />,
       ],
     },
   ];
@@ -56,7 +55,7 @@ export default function Problem() {
         </p>
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-[220px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 pb-12 gap-6 auto-rows-[220px]">
           {items.map((item, index) => (
             <TorchCard
               key={index}

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import LocomotiveScroll from "locomotive-scroll";
-import "locomotive-scroll/dist/locomotive-scroll.css";
+// import LocomotiveScroll from "locomotive-scroll"; // Removed the import
+// import "locomotive-scroll/dist/locomotive-scroll.css"; // Removed the CSS import
 import Navbar from "./Navbar";
 import Hero from "./Hero";
 import Problem from "./Problem";
@@ -11,37 +11,16 @@ import CTA from "./CTA";
 import Footer from "./Footer";
 
 export default function App() {
-  const scrollRef = useRef(null);
-  const scrollInstance = useRef(null);
-
-  useEffect(() => {
-    const scroll = new LocomotiveScroll({
-      el: scrollRef.current,
-      smooth: true,
-      lerp: 0.08,
-      multiplier: 1,
-      class: "is-reveal",
-    });
-
-    scrollInstance.current = scroll;
-
-    const handleResize = () => scroll.update();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      scroll.destroy();
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const scrollInstance = useRef(null); // Keeping this for now in case other components need it
 
   return (
     <>
-      <Navbar scrollInstance={scrollInstance} />
-      <div ref={scrollRef} data-scroll-container>
+      <Navbar scrollInstance={scrollInstance} />     {" "}
+      <div>
         <Hero />
         <Problem />
         <Solutions />
-        <Process />
+        {/*         <Process /> */}
         <Credibility />
         <CTA />
         <Footer />
