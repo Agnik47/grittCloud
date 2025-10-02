@@ -11,7 +11,7 @@ export default function Problem() {
         "Initiatives start from tech curiosity not a quantifiable bottleneck.",
       size: "large",
       icons: [
-        <img src={assets.P1} alt="P1" className="max-w-full h-auto object-contain" />
+        <img src={assets.P1} alt="P1" className=" size-[19vw] object-contain" />
       ],
     },
     {
