@@ -13,5 +13,14 @@
   <body class="antialiased bg-ink text-white selection:bg-accent selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Hidden form for Netlify Forms detection - DO NOT REMOVE -->
+    <!-- This form is parsed by Netlify at build time to enable form handling -->
+    <form name="get-in-touch" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="org" />
+      <input type="email" name="email" />
+      <input type="text" name="person" />
+      <input type="tel" name="contact" />
+    </form>
   </body>
 </html>

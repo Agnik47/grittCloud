@@ -182,10 +182,17 @@ export default function Navbar({ scrollInstance }) {
                 name="get-in-touch"
                 method="POST"
                 data-netlify="true"
+                data-netlify-honeypot="bot-field"
                 className="space-y-5"
                 onSubmit={handleSubmit}
               >
                 <input type="hidden" name="form-name" value="get-in-touch" />
+                {/* Honeypot field for spam protection - hidden from users */}
+                <p className="hidden">
+                  <label>
+                    Don't fill this out if you're human: <input name="bot-field" />
+                  </label>
+                </p>
                 <div>
                   <label
                     className="block text-white/70 text-sm mb-1"

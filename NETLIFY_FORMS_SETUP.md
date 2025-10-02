@@ -2,27 +2,44 @@
 
 This document explains the Netlify Forms integration implemented in this project.
 
+## 🚨 CRITICAL: Hidden HTML Form Required for React/Vite
+
+**Important**: Since this is a React app built with Vite, forms are rendered client-side using JavaScript. Netlify's build process cannot detect JavaScript-rendered forms, so we **must include a hidden static HTML form** in `index.html` that matches our React form exactly.
+
+### Why This Is Required:
+- Netlify scans HTML at build time to detect forms
+- React renders forms dynamically in the browser (after build)
+- The hidden HTML form acts as a "template" for Netlify
+- Without it, Netlify won't know the form exists
+
 ## What Changed
+
+### 0. Hidden HTML Form in `index.html` ⭐ MOST IMPORTANT
+
+**Added static HTML form for Netlify detection:**
+```html
+<form name="get-in-touch" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="org" />
+  <input type="email" name="email" />
+  <input type="text" name="person" />
+  <input type="tel" name="contact" />
+</form>
+```
+
+This form:
+- Has `netlify` attribute (enables form handling)
+- Has `netlify-honeypot="bot-field"` (spam protection)
+- Has `hidden` attribute (invisible to users)
+- Contains ALL field names that match the React form
+- Is parsed by Netlify at build time
+
+**Without this hidden form, Netlify Forms will NOT work!**
 
 ### 1. CTA Contact Form (`src/sections/CTA.jsx`)
 
-**Added Netlify Forms attributes:**
-- `name="contact"` - Form identifier in Netlify dashboard
-- `method="POST"` - Required for form submission
-- `data-netlify="true"` - Enables Netlify form detection
-- `<input type="hidden" name="form-name" value="contact" />` - Required for AJAX submissions
+**Note**: This form has been replaced with a Cal.com booking widget for scheduling consultations. If you need a contact form instead, refer to the git history.
 
-**Added proper name attributes to all inputs:**
-- `firstName` - First name field
-- `email` - Email field
-- `company` - Company field
-- `interest` - Interest selection dropdown
-
-**Implemented AJAX submission:**
-- Prevents page reload on submit
-- Shows success message inline
-- Allows users to submit multiple times
-- Displays loading state while submitting
+### 2. Navbar Modal Form (`src/sections/Navbar.jsx`)
 
 ### 2. Navbar Modal Form (`src/sections/Navbar.jsx`)
 
@@ -30,7 +47,9 @@ This document explains the Netlify Forms integration implemented in this project
 - `name="get-in-touch"` - Form identifier in Netlify dashboard
 - `method="POST"` - Required for form submission
 - `data-netlify="true"` - Enables Netlify form detection
+- `data-netlify-honeypot="bot-field"` - Spam protection
 - `<input type="hidden" name="form-name" value="get-in-touch" />` - Required for AJAX submissions
+- Hidden honeypot field for spam filtering
 
 **Form fields:**
 - `org` - Organization name
