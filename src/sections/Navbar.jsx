@@ -5,6 +5,8 @@ import { assets } from "../assets/assets";
 export default function Navbar({ scrollInstance }) {
   const navRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   let lastScrollY = 0;
 
   useEffect(() => {
@@ -66,6 +68,33 @@ export default function Navbar({ scrollInstance }) {
       );
     }
   }, [showModal]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const myForm = e.target;
+    const formData = new FormData(myForm);
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData).toString(),
+    })
+      .then(() => {
+        setIsSubmitted(true);
+        setIsSubmitting(false);
+        myForm.reset();
+        setTimeout(() => {
+          setShowModal(false);
+          setIsSubmitted(false);
+        }, 3000);
+      })
+      .catch((error) => {
+        alert(`Error: ${error.message}`);
+        setIsSubmitting(false);
+      });
+  };
 
   return (
     <>
@@ -142,85 +171,94 @@ export default function Navbar({ scrollInstance }) {
             <h3 className="text-xl font-semibold mb-6 text-white">
               Get in Touch
             </h3>
-            <form
-              className="space-y-5"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setShowModal(false);
-                // You can add your submit logic here
-              }}
-            >
-              <div>
-                <label
-                  className="block text-white/70 text-sm mb-1"
-                  htmlFor="org"
-                >
-                  Organization Name
-                </label>
-                <input
-                  id="org"
-                  name="org"
-                  type="text"
-                  required
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
-                  placeholder="Your organization"
-                />
+            
+            {isSubmitted ? (
+              <div className="p-6 rounded-lg bg-accent/10 border border-accent/30 text-center">
+                <p className="text-accent text-lg font-medium mb-2">Thank you!</p>
+                <p className="text-white/70 text-sm">We'll contact you soon.</p>
               </div>
-              <div>
-                <label
-                  className="block text-white/70 text-sm mb-1"
-                  htmlFor="email"
-                >
-                  Email
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
-                  placeholder="you@email.com"
-                />
-              </div>
-              <div>
-                <label
-                  className="block text-white/70 text-sm mb-1"
-                  htmlFor="person"
-                >
-                  Person Name
-                </label>
-                <input
-                  id="person"
-                  name="person"
-                  type="text"
-                  required
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
-                  placeholder="Contact person"
-                />
-              </div>
-              <div>
-                <label
-                  className="block text-white/70 text-sm mb-1"
-                  htmlFor="contact"
-                >
-                  Person Contact Number
-                </label>
-                <input
-                  id="contact"
-                  name="contact"
-                  type="tel"
-                  required
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
-                  placeholder="Contact number"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full mt-2 py-3 rounded-full bg-accent hover:bg-accent2 text-white font-medium text-sm tracking-wide shadow-subtle transition"
+            ) : (
+              <form
+                name="get-in-touch"
+                method="POST"
+                data-netlify="true"
+                className="space-y-5"
+                onSubmit={handleSubmit}
               >
-                Submit
-              </button>
-            </form>
+                <input type="hidden" name="form-name" value="get-in-touch" />
+                <div>
+                  <label
+                    className="block text-white/70 text-sm mb-1"
+                    htmlFor="org"
+                  >
+                    Organization Name
+                  </label>
+                  <input
+                    id="org"
+                    name="org"
+                    type="text"
+                    required
+                    className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                    placeholder="Your organization"
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-white/70 text-sm mb-1"
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                    placeholder="you@email.com"
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-white/70 text-sm mb-1"
+                    htmlFor="person"
+                  >
+                    Person Name
+                  </label>
+                  <input
+                    id="person"
+                    name="person"
+                    type="text"
+                    required
+                    className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                    placeholder="Contact person"
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-white/70 text-sm mb-1"
+                    htmlFor="contact"
+                  >
+                    Person Contact Number
+                  </label>
+                  <input
+                    id="contact"
+                    name="contact"
+                    type="tel"
+                    required
+                    className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                    placeholder="Contact number"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full mt-2 py-3 rounded-full bg-accent hover:bg-accent2 text-white font-medium text-sm tracking-wide shadow-subtle transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? "Submitting..." : "Submit"}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       )}
